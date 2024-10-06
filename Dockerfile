@@ -1,0 +1,6 @@
+FROM postgres:14
+
+ENV POSTGRES_DB=NeoStore
+ENV POSTGRES_USER=neouser
+ENV POSTGRES_PASSWORD=neopassword
+
