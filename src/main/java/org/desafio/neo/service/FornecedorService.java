@@ -48,6 +48,10 @@ public class FornecedorService {
         return fornecedorRepository.findAll();
     }
 
+    public List<Fornecedor> getAllPaginated(int page, int size) {
+        return fornecedorRepository.findAllPaginated(page,size);
+    }
+
     public Fornecedor updateFornecedor(Fornecedor fornecedorAtualizado) {
         Fornecedor fornecedorExistente = fornecedorRepository.findById(fornecedorAtualizado.getId());
 

@@ -34,6 +34,14 @@ public class FornecedorRepository {
         return session.createQuery("from Fornecedor", Fornecedor.class).list();
     }
 
+    public List<Fornecedor> findAllPaginated(int page, int size) {
+        int offset = (page - 1) * size;
+        return session.createQuery("from Fornecedor", Fornecedor.class)
+                .setFirstResult(offset)
+                .setMaxResults(size)
+                .getResultList();
+    }
+
     public void update(Fornecedor fornecedor) {
         Transaction transaction = session.beginTransaction();
         try {

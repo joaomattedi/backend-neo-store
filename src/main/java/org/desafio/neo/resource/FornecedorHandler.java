@@ -8,11 +8,12 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.desafio.neo.model.Fornecedor;
 import org.desafio.neo.service.FornecedorService;
+import org.desafio.neo.utils.RequestUtils;
 import org.hibernate.Session;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Map;
 
 public class FornecedorHandler implements HttpHandler {
     private FornecedorService fornecedorService;
@@ -23,11 +24,15 @@ public class FornecedorHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
         String response = "Metódo HTTP não encontrado";
         switch (exchange.getRequestMethod()) {
             case "GET":
                 // get list, get single
-                response = handlerGETMethod(exchange.getRequestURI().getPath());
+                response = handlerGETMethod(exchange);
                 exchange.getResponseHeaders().add("Content-Type", "application/json");
                 break;
             case "POST":
@@ -54,11 +59,18 @@ public class FornecedorHandler implements HttpHandler {
         os.close();
     }
 
-    private String handlerGETMethod(String apiPath) {
+    private String handlerGETMethod(HttpExchange exchange) {
         Gson gson = new GsonBuilder().create();
+        String apiPath = exchange.getRequestURI().getPath();
 
         if (apiPath.equals("/api/fornecedores/list")) {
-            return gson.toJson(fornecedorService.getAllFornecedores());
+            String query = exchange.getRequestURI().getQuery();
+            Map<String, String> queryParams = RequestUtils.parseQueryParams(query);
+
+            int page = queryParams.containsKey("page") ? Integer.parseInt(queryParams.get("page")) : 1;
+            int size = queryParams.containsKey("size") ? Integer.parseInt(queryParams.get("size")) : 5;
+
+            return gson.toJson(fornecedorService.getAllPaginated(page, size));
         } else if (apiPath.matches("/api/fornecedores/\\d+")) {
             String idString = apiPath.substring(apiPath.lastIndexOf("/") + 1);
             return gson.toJson(fornecedorService.getFornecedorById(Long.parseLong(idString)));
