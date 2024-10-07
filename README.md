@@ -23,10 +23,9 @@ Este é o backend para o sistema de cadastro de fornecedores da NeoStore, desenv
 
 ### Passos para Executar
 
-1. Faça um fork deste repositório
-2. Clone o repositório:
+1. Clone o repositório:
    ```bash
-   git clone https://github.com/seuprojeto/backend-neo-store.git
+   git clone https://github.com/joaomattedi/backend-neo-store.git
 
 3. Entre na pasta do projeto backend:
    ```bash
