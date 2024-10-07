@@ -1,6 +1,6 @@
 # Fornecedor Backend
 
-Este é o backend para o sistema de cadastro de fornecedores, desenvolvido em Java com Hibernate, JPA, JUnit5, Http nativo do Java, Docker para o banco de dados e PostgreSQL como banco de dados.
+Este é o backend para o sistema de cadastro de fornecedores da NeoStore, desenvolvido em Java com Hibernate, JPA, JUnit5, Http nativo do Java, Docker para o banco de dados e PostgreSQL como banco de dados.
 
 ## Tecnologias Utilizadas
 
@@ -23,7 +23,7 @@ Este é o backend para o sistema de cadastro de fornecedores, desenvolvido em Ja
 
 ### Passos para Executar
 
-1. Faça um fork deste repositório:
+1. Faça um fork deste repositório
 2. Clone o repositório:
    ```bash
    git clone https://github.com/seuprojeto/backend-neo-store.git
@@ -39,8 +39,8 @@ Este é o backend para o sistema de cadastro de fornecedores, desenvolvido em Ja
 5. Inicie o banco de dados PostgreSQL utilizando Docker:
    ```bash
    docker-compose up -d
-    
-6. Rode o projeto:
+
+6. Rode o projeto com o comando `mvn exec:java "-Dexec.mainClass=org.desafio.neo.Application"`
     
 7. A API estará disponível em `http://localhost:8080/api`
 
