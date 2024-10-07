@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.desafio.neo.model.Fornecedor;
 import org.desafio.neo.repository.FornecedorRepository;
+import org.desafio.neo.utils.CNPJUtils;
+import org.desafio.neo.utils.EmailUtils;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -24,7 +26,15 @@ public class FornecedorService {
         for (int i = 0; i < jsonArray.size(); i++) {
             try {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+
                 Fornecedor fornecedor = new Gson().fromJson(jsonObject, Fornecedor.class);
+                if (!CNPJUtils.isValidCNPJ(fornecedor.getCnpj())) {
+                    throw new RuntimeException("CNPJ Inválido");
+                }
+                if (!EmailUtils.isValidEmail(fornecedor.getEmail())) {
+                    throw new RuntimeException("E-mail Inválido");
+                }
+
                 fornecedorRepository.save(fornecedor);
                 fornecedoresCriados.add(fornecedor);
             } catch (Exception e) {

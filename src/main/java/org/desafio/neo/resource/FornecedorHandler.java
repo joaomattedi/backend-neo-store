@@ -82,7 +82,6 @@ public class FornecedorHandler implements HttpHandler {
     private String handlerPOSTMethod(String apiPath, InputStream requestInput) {
         Gson gson = new GsonBuilder().create();
 
-
         if (apiPath.equals("/api/fornecedores")) {
             InputStreamReader isr = new InputStreamReader(requestInput, StandardCharsets.UTF_8);
             JsonArray jsonArray = gson.fromJson(isr, JsonArray.class);
